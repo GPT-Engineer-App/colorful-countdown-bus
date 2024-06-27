@@ -15,10 +15,10 @@ const Index = () => {
       try {
         const data = await parseGTFS(GTFS_URL);
         setDepartures(data);
-        setLoading(false);
       } catch (error) {
         console.error("Error parsing GTFS data:", error);
         setError("Failed to load departure data.");
+      } finally {
         setLoading(false);
       }
     };
