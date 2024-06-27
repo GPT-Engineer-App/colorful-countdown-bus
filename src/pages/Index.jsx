@@ -8,6 +8,7 @@ const GTFS_URL = "https://developers.google.com/static/transit/gtfs/examples/sam
 const Index = () => {
   const [departures, setDepartures] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +18,7 @@ const Index = () => {
         setLoading(false);
       } catch (error) {
         console.error("Error parsing GTFS data:", error);
+        setError("Failed to load departure data.");
         setLoading(false);
       }
     };
@@ -45,6 +47,8 @@ const Index = () => {
       <h1 className="text-4xl text-white mb-8">Bus Departures</h1>
       {loading ? (
         <p className="text-white">Loading...</p>
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {departures.map((departure, index) => (
